@@ -6,6 +6,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     day3::solve()?;
     day4::solve()?;
     day5::solve()?;
+    day6::solve()?;
 
     Ok(())
 }
