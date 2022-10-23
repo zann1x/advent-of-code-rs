@@ -1,8 +1,7 @@
 use std::collections::HashSet;
 use std::error::Error;
-use std::fs;
 
-const INPUT_FILE: &str = "input/day1.txt";
+const INPUT_FILE: &str = include_str!(concat!(env!("CARGO_MANIFEST_DIR"), "/input/day1.txt"));
 
 pub fn solve() -> Result<(), Box<dyn Error>> {
     println!(
@@ -24,8 +23,8 @@ pub fn solve() -> Result<(), Box<dyn Error>> {
     Ok(())
 }
 
-fn solve_part_one(path: &str) -> Result<Option<u64>, Box<dyn Error>> {
-    let input: HashSet<u64> = fs::read_to_string(&path)?
+fn solve_part_one(file_contents: &str) -> Result<Option<u64>, Box<dyn Error>> {
+    let input: HashSet<u64> = file_contents
         .lines()
         .map(|s| s.trim())
         .map(|s| s.parse().unwrap())
@@ -41,8 +40,8 @@ fn solve_part_one(path: &str) -> Result<Option<u64>, Box<dyn Error>> {
     Ok(None)
 }
 
-fn solve_part_two(path: &str) -> Result<Option<u64>, Box<dyn Error>> {
-    let input_set: HashSet<u64> = fs::read_to_string(&path)?
+fn solve_part_two(file_contents: &str) -> Result<Option<u64>, Box<dyn Error>> {
+    let input_set: HashSet<u64> = file_contents
         .lines()
         .map(|s| s.trim())
         .map(|s| s.parse().unwrap())
@@ -69,7 +68,8 @@ fn solve_part_two(path: &str) -> Result<Option<u64>, Box<dyn Error>> {
 mod tests {
     use super::*;
 
-    const TEST_INPUT_FILE: &str = "input/day1-test.txt";
+    const TEST_INPUT_FILE: &str =
+        include_str!(concat!(env!("CARGO_MANIFEST_DIR"), "/input/day1-test.txt"));
 
     #[test]
     fn part_one() {

@@ -1,8 +1,8 @@
-use std::{error::Error, fs};
+use std::error::Error;
 
 use regex::Regex;
 
-const INPUT_FILE: &str = "input/day2.txt";
+const INPUT_FILE: &str = include_str!(concat!(env!("CARGO_MANIFEST_DIR"), "/input/day2.txt"));
 
 struct InputLine {
     lower_bound: u32,
@@ -31,11 +31,8 @@ pub fn solve() -> Result<(), Box<dyn Error>> {
     Ok(())
 }
 
-fn solve_part_one(path: &str) -> Result<Option<u64>, Box<dyn Error>> {
-    let input: Vec<String> = fs::read_to_string(&path)?
-        .lines()
-        .map(|s| s.to_string())
-        .collect();
+fn solve_part_one(file_contents: &str) -> Result<Option<u64>, Box<dyn Error>> {
+    let input: Vec<String> = file_contents.lines().map(|s| s.to_string()).collect();
 
     let mut parsed_input = Vec::<InputLine>::new();
     let regexp = Regex::new(r"^(\d+)-(\d+) ([a-zA-Z]): ([a-zA-Z]+)$").unwrap();
@@ -65,11 +62,8 @@ fn solve_part_one(path: &str) -> Result<Option<u64>, Box<dyn Error>> {
     Ok(Some(valid_password_count as u64))
 }
 
-fn solve_part_two(path: &str) -> Result<Option<u64>, Box<dyn Error>> {
-    let input: Vec<String> = fs::read_to_string(&path)?
-        .lines()
-        .map(|s| s.to_string())
-        .collect();
+fn solve_part_two(file_contents: &str) -> Result<Option<u64>, Box<dyn Error>> {
+    let input: Vec<String> = file_contents.lines().map(|s| s.to_string()).collect();
 
     let mut parsed_input = Vec::<InputLine>::new();
     let regexp = Regex::new(r"^(\d+)-(\d+) ([a-zA-Z]): ([a-zA-Z]+)$").unwrap();
@@ -106,7 +100,8 @@ fn solve_part_two(path: &str) -> Result<Option<u64>, Box<dyn Error>> {
 mod tests {
     use super::*;
 
-    const TEST_INPUT_FILE: &str = "input/day2-test.txt";
+    const TEST_INPUT_FILE: &str =
+        include_str!(concat!(env!("CARGO_MANIFEST_DIR"), "/input/day2-test.txt"));
 
     #[test]
     fn part_one() {

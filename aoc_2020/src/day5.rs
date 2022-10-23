@@ -1,6 +1,6 @@
-use std::{error::Error, fs};
+use std::error::Error;
 
-const INPUT_FILE: &str = "input/day5.txt";
+const INPUT_FILE: &str = include_str!(concat!(env!("CARGO_MANIFEST_DIR"), "/input/day5.txt"));
 
 pub fn solve() -> Result<(), Box<dyn Error>> {
     println!(
@@ -43,11 +43,8 @@ fn find_position(s: &str, lower_bound: u64, upper_bound: u64) -> u64 {
     }
 }
 
-fn solve_part_one(path: &str) -> Result<Option<u64>, Box<dyn Error>> {
-    let input: Vec<String> = fs::read_to_string(&path)?
-        .lines()
-        .map(|s| s.to_string())
-        .collect();
+fn solve_part_one(file_contents: &str) -> Result<Option<u64>, Box<dyn Error>> {
+    let input: Vec<String> = file_contents.lines().map(|s| s.to_string()).collect();
 
     Ok(input
         .iter()
@@ -55,11 +52,8 @@ fn solve_part_one(path: &str) -> Result<Option<u64>, Box<dyn Error>> {
         .reduce(|a, b| a.max(b)))
 }
 
-fn solve_part_two(path: &str) -> Result<Option<u64>, Box<dyn Error>> {
-    let input: Vec<String> = fs::read_to_string(&path)?
-        .lines()
-        .map(|s| s.to_string())
-        .collect();
+fn solve_part_two(file_contents: &str) -> Result<Option<u64>, Box<dyn Error>> {
+    let input: Vec<String> = file_contents.lines().map(|s| s.to_string()).collect();
 
     let ids = input
         .iter()
@@ -78,7 +72,8 @@ fn solve_part_two(path: &str) -> Result<Option<u64>, Box<dyn Error>> {
 mod tests {
     use super::*;
 
-    const TEST_INPUT_FILE: &str = "input/day5-test.txt";
+    const TEST_INPUT_FILE: &str =
+        include_str!(concat!(env!("CARGO_MANIFEST_DIR"), "/input/day5-test.txt"));
 
     #[test]
     fn part_one() {

@@ -1,10 +1,9 @@
 use std::{
     collections::{HashMap, HashSet},
     error::Error,
-    fs,
 };
 
-const INPUT_FILE: &str = "input/day6.txt";
+const INPUT_FILE: &str = include_str!(concat!(env!("CARGO_MANIFEST_DIR"), "/input/day6.txt"));
 
 pub fn solve() -> Result<(), Box<dyn Error>> {
     println!(
@@ -26,11 +25,8 @@ pub fn solve() -> Result<(), Box<dyn Error>> {
     Ok(())
 }
 
-fn solve_part_one(path: &str) -> Result<Option<u64>, Box<dyn Error>> {
-    let input: Vec<String> = fs::read_to_string(&path)?
-        .lines()
-        .map(|s| s.to_string())
-        .collect();
+fn solve_part_one(file_contents: &str) -> Result<Option<u64>, Box<dyn Error>> {
+    let input: Vec<String> = file_contents.lines().map(|s| s.to_string()).collect();
 
     let mut sum = 0;
     let mut group_answers = HashSet::new();
@@ -50,11 +46,8 @@ fn solve_part_one(path: &str) -> Result<Option<u64>, Box<dyn Error>> {
     Ok(Some(sum))
 }
 
-fn solve_part_two(path: &str) -> Result<Option<u64>, Box<dyn Error>> {
-    let input: Vec<String> = fs::read_to_string(&path)?
-        .lines()
-        .map(|s| s.to_string())
-        .collect();
+fn solve_part_two(file_contents: &str) -> Result<Option<u64>, Box<dyn Error>> {
+    let input: Vec<String> = file_contents.lines().map(|s| s.to_string()).collect();
 
     let mut sum: u64 = 0;
     let mut group_members = 0;
@@ -89,7 +82,8 @@ fn solve_part_two(path: &str) -> Result<Option<u64>, Box<dyn Error>> {
 mod tests {
     use super::*;
 
-    const TEST_INPUT_FILE: &str = "input/day6-test.txt";
+    const TEST_INPUT_FILE: &str =
+        include_str!(concat!(env!("CARGO_MANIFEST_DIR"), "/input/day6-test.txt"));
 
     #[test]
     fn part_one() {

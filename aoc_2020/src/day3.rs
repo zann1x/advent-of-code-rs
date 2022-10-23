@@ -1,6 +1,6 @@
-use std::{error::Error, fs};
+use std::error::Error;
 
-const INPUT_FILE: &str = "input/day3.txt";
+const INPUT_FILE: &str = include_str!(concat!(env!("CARGO_MANIFEST_DIR"), "/input/day3.txt"));
 
 struct Traversion {
     right: usize,
@@ -27,11 +27,8 @@ pub fn solve() -> Result<(), Box<dyn Error>> {
     Ok(())
 }
 
-fn solve_part_one(path: &str) -> Result<Option<u64>, Box<dyn Error>> {
-    let input: Vec<String> = fs::read_to_string(&path)?
-        .lines()
-        .map(|s| s.to_string())
-        .collect();
+fn solve_part_one(file_contents: &str) -> Result<Option<u64>, Box<dyn Error>> {
+    let input: Vec<String> = file_contents.lines().map(|s| s.to_string()).collect();
 
     let map_width = input[0].len();
     let traversion = Traversion { right: 3, down: 1 };
@@ -51,11 +48,8 @@ fn solve_part_one(path: &str) -> Result<Option<u64>, Box<dyn Error>> {
     Ok(Some(tree_hit_count))
 }
 
-fn solve_part_two(path: &str) -> Result<Option<u64>, Box<dyn Error>> {
-    let input: Vec<String> = fs::read_to_string(&path)?
-        .lines()
-        .map(|s| s.to_string())
-        .collect();
+fn solve_part_two(file_contents: &str) -> Result<Option<u64>, Box<dyn Error>> {
+    let input: Vec<String> = file_contents.lines().map(|s| s.to_string()).collect();
 
     let map_width = input[0].len();
     let traversions = vec![
@@ -92,7 +86,8 @@ fn solve_part_two(path: &str) -> Result<Option<u64>, Box<dyn Error>> {
 mod tests {
     use super::*;
 
-    const TEST_INPUT_FILE: &str = "input/day3-test.txt";
+    const TEST_INPUT_FILE: &str =
+        include_str!(concat!(env!("CARGO_MANIFEST_DIR"), "/input/day3-test.txt"));
 
     #[test]
     fn part_one() {
