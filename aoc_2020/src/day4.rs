@@ -1,5 +1,3 @@
-use std::error::Error;
-
 const INPUT_FILE: &str = include_str!(concat!(env!("CARGO_MANIFEST_DIR"), "/input/day4.txt"));
 
 struct PassportData {
@@ -13,27 +11,12 @@ struct PassportData {
     cid: Option<String>,
 }
 
-pub fn solve() -> Result<(), Box<dyn Error>> {
-    println!(
-        "Day 04.1: {}",
-        match solve_part_one(INPUT_FILE)? {
-            Some(v) => v.to_string(),
-            None => "no solution".to_string(),
-        }
-    );
-
-    println!(
-        "Day 04.2: {}",
-        match solve_part_two(INPUT_FILE)? {
-            Some(v) => v.to_string(),
-            None => "no solution".to_string(),
-        }
-    );
-
-    Ok(())
+pub fn solve() {
+    println!("Day 04.1: {}", solve_part_one(INPUT_FILE));
+    println!("Day 04.2: {}", solve_part_two(INPUT_FILE));
 }
 
-fn solve_part_one(file_contents: &str) -> Result<Option<u64>, Box<dyn Error>> {
+fn solve_part_one(file_contents: &str) -> u64 {
     let input: Vec<String> = file_contents.lines().map(|s| s.to_string()).collect();
 
     let mut passport_data_strings = Vec::new();
@@ -85,23 +68,21 @@ fn solve_part_one(file_contents: &str) -> Result<Option<u64>, Box<dyn Error>> {
         })
         .collect::<Vec<_>>();
 
-    Ok(Some(
-        passport_data
-            .iter()
-            .filter(|p| {
-                p.byr.is_some()
-                    && p.iyr.is_some()
-                    && p.eyr.is_some()
-                    && p.hgt.is_some()
-                    && p.hcl.is_some()
-                    && p.ecl.is_some()
-                    && p.pid.is_some()
-            })
-            .count() as u64,
-    ))
+    passport_data
+        .iter()
+        .filter(|p| {
+            p.byr.is_some()
+                && p.iyr.is_some()
+                && p.eyr.is_some()
+                && p.hgt.is_some()
+                && p.hcl.is_some()
+                && p.ecl.is_some()
+                && p.pid.is_some()
+        })
+        .count() as u64
 }
 
-fn solve_part_two(file_contents: &str) -> Result<Option<u64>, Box<dyn Error>> {
+fn solve_part_two(file_contents: &str) -> u64 {
     let input: Vec<String> = file_contents.lines().map(|s| s.to_string()).collect();
 
     let mut passport_data_strings = Vec::new();
@@ -153,51 +134,49 @@ fn solve_part_two(file_contents: &str) -> Result<Option<u64>, Box<dyn Error>> {
         })
         .collect::<Vec<_>>();
 
-    Ok(Some(
-        passport_data
-            .iter()
-            .filter(|p| {
-                p.byr.is_some()
-                    && p.iyr.is_some()
-                    && p.eyr.is_some()
-                    && p.hgt.is_some()
-                    && p.hcl.is_some()
-                    && p.ecl.is_some()
-                    && p.pid.is_some()
-            })
-            .filter(|p| (1920..=2002).contains(&p.byr.as_ref().unwrap().parse().unwrap()))
-            .filter(|p| (2010..=2020).contains(&p.iyr.as_ref().unwrap().parse().unwrap()))
-            .filter(|p| (2020..=2030).contains(&p.eyr.as_ref().unwrap().parse().unwrap()))
-            .filter(|p| {
-                let hgt = p.hgt.as_ref().unwrap();
+    passport_data
+        .iter()
+        .filter(|p| {
+            p.byr.is_some()
+                && p.iyr.is_some()
+                && p.eyr.is_some()
+                && p.hgt.is_some()
+                && p.hcl.is_some()
+                && p.ecl.is_some()
+                && p.pid.is_some()
+        })
+        .filter(|p| (1920..=2002).contains(&p.byr.as_ref().unwrap().parse().unwrap()))
+        .filter(|p| (2010..=2020).contains(&p.iyr.as_ref().unwrap().parse().unwrap()))
+        .filter(|p| (2020..=2030).contains(&p.eyr.as_ref().unwrap().parse().unwrap()))
+        .filter(|p| {
+            let hgt = p.hgt.as_ref().unwrap();
 
-                (hgt.ends_with("cm")
-                    && hgt.len() == 5
-                    && (150..=193).contains(&hgt[..3].parse().unwrap()))
-                    || (hgt.ends_with("in")
-                        && hgt.len() == 4
-                        && (59..=76).contains(&hgt[..2].parse().unwrap()))
-            })
-            .filter(|p| {
-                let hcl = p.hcl.as_ref().unwrap();
+            (hgt.ends_with("cm")
+                && hgt.len() == 5
+                && (150..=193).contains(&hgt[..3].parse().unwrap()))
+                || (hgt.ends_with("in")
+                    && hgt.len() == 4
+                    && (59..=76).contains(&hgt[..2].parse().unwrap()))
+        })
+        .filter(|p| {
+            let hcl = p.hcl.as_ref().unwrap();
 
-                hcl.starts_with('#')
-                    && hcl.len() == 7
-                    && hcl.as_bytes()[1..]
-                        .iter()
-                        .all(|c| (b'0'..=b'9').contains(c) || (b'a'..=b'f').contains(c))
-            })
-            .filter(|p| {
-                ["amb", "blu", "brn", "gry", "grn", "hzl", "oth"]
-                    .contains(&p.ecl.as_ref().unwrap().as_str())
-            })
-            .filter(|p| {
-                let pid = p.pid.as_ref().unwrap();
+            hcl.starts_with('#')
+                && hcl.len() == 7
+                && hcl.as_bytes()[1..]
+                    .iter()
+                    .all(|c| (b'0'..=b'9').contains(c) || (b'a'..=b'f').contains(c))
+        })
+        .filter(|p| {
+            ["amb", "blu", "brn", "gry", "grn", "hzl", "oth"]
+                .contains(&p.ecl.as_ref().unwrap().as_str())
+        })
+        .filter(|p| {
+            let pid = p.pid.as_ref().unwrap();
 
-                pid.len() == 9 && pid.chars().all(|c| c.is_numeric())
-            })
-            .count() as u64,
-    ))
+            pid.len() == 9 && pid.chars().all(|c| c.is_numeric())
+        })
+        .count() as u64
 }
 
 #[cfg(test)]
@@ -211,13 +190,13 @@ mod tests {
 
     #[test]
     fn part_one() {
-        let result = solve_part_one(TEST_INPUT_FILE_1).unwrap().unwrap();
+        let result = solve_part_one(TEST_INPUT_FILE_1);
         assert_eq!(result, 2);
     }
 
     #[test]
     fn part_two() {
-        let result = solve_part_two(TEST_INPUT_FILE_2).unwrap().unwrap();
+        let result = solve_part_two(TEST_INPUT_FILE_2);
         assert_eq!(result, 6);
     }
 }

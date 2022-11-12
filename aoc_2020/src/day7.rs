@@ -1,27 +1,10 @@
-use std::error::Error;
-
 use regex::Regex;
 
 const INPUT_FILE: &str = include_str!(concat!(env!("CARGO_MANIFEST_DIR"), "/input/day7.txt"));
 
-pub fn solve() -> Result<(), Box<dyn Error>> {
-    println!(
-        "Day 07.1: {}",
-        match solve_part_one(INPUT_FILE)? {
-            Some(v) => v.to_string(),
-            None => "no solution".to_string(),
-        }
-    );
-
-    println!(
-        "Day 07.2: {}",
-        match solve_part_two(INPUT_FILE)? {
-            Some(v) => v.to_string(),
-            None => "no solution".to_string(),
-        }
-    );
-
-    Ok(())
+pub fn solve() {
+    println!("Day 07.1: {}", solve_part_one(INPUT_FILE));
+    println!("Day 07.2: {}", solve_part_two(INPUT_FILE));
 }
 
 struct BagInfo {
@@ -29,7 +12,7 @@ struct BagInfo {
     contents: Vec<(u64, String)>,
 }
 
-fn solve_part_one(file_contents: &str) -> Result<Option<u64>, Box<dyn Error>> {
+fn solve_part_one(file_contents: &str) -> u64 {
     let input: Vec<String> = file_contents.lines().map(|s| s.to_string()).collect();
 
     let regexp_bag = Regex::new(r"^([a-z ]+) bags contain (.+)$").unwrap();
@@ -71,7 +54,7 @@ fn solve_part_one(file_contents: &str) -> Result<Option<u64>, Box<dyn Error>> {
         i += 1;
     }
 
-    Ok(Some(bags_containing_shiny_gold.len() as u64))
+    bags_containing_shiny_gold.len() as u64
 }
 
 fn count_bags(bag_infos: &Vec<BagInfo>, name: &str) -> u64 {
@@ -87,7 +70,7 @@ fn count_bags(bag_infos: &Vec<BagInfo>, name: &str) -> u64 {
         .sum::<u64>()
 }
 
-fn solve_part_two(file_contents: &str) -> Result<Option<u64>, Box<dyn Error>> {
+fn solve_part_two(file_contents: &str) -> u64 {
     let input: Vec<String> = file_contents.lines().map(|s| s.to_string()).collect();
 
     let regexp_bag = Regex::new(r"^([a-z ]+) bags contain (.+)$").unwrap();
@@ -108,7 +91,7 @@ fn solve_part_two(file_contents: &str) -> Result<Option<u64>, Box<dyn Error>> {
         })
         .collect::<Vec<_>>();
 
-    Ok(Some(count_bags(&bag_infos, "shiny gold") - 1))
+    count_bags(&bag_infos, "shiny gold") - 1
 }
 
 #[cfg(test)]
@@ -124,19 +107,19 @@ mod tests {
 
     #[test]
     fn part_one() {
-        let result = solve_part_one(TEST_INPUT_FILE_1).unwrap().unwrap();
+        let result = solve_part_one(TEST_INPUT_FILE_1);
         assert_eq!(result, 4);
     }
 
     #[test]
     fn part_two_with_first_test_data() {
-        let result = solve_part_two(TEST_INPUT_FILE_2_1).unwrap().unwrap();
+        let result = solve_part_two(TEST_INPUT_FILE_2_1);
         assert_eq!(result, 32);
     }
 
     #[test]
     fn part_two_with_second_test_data() {
-        let result = solve_part_two(TEST_INPUT_FILE_2_2).unwrap().unwrap();
+        let result = solve_part_two(TEST_INPUT_FILE_2_2);
         assert_eq!(result, 126);
     }
 }

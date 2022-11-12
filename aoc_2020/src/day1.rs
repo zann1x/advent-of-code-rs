@@ -1,29 +1,13 @@
 use std::collections::HashSet;
-use std::error::Error;
 
 const INPUT_FILE: &str = include_str!(concat!(env!("CARGO_MANIFEST_DIR"), "/input/day1.txt"));
 
-pub fn solve() -> Result<(), Box<dyn Error>> {
-    println!(
-        "Day 01.1: {}",
-        match solve_part_one(INPUT_FILE)? {
-            Some(v) => v.to_string(),
-            None => "no solution".to_string(),
-        }
-    );
-
-    println!(
-        "Day 01.2: {}",
-        match solve_part_two(INPUT_FILE)? {
-            Some(v) => v.to_string(),
-            None => "no solution".to_string(),
-        }
-    );
-
-    Ok(())
+pub fn solve() {
+    println!("Day 01.1: {}", solve_part_one(INPUT_FILE));
+    println!("Day 01.2: {}", solve_part_two(INPUT_FILE));
 }
 
-fn solve_part_one(file_contents: &str) -> Result<Option<u64>, Box<dyn Error>> {
+fn solve_part_one(file_contents: &str) -> u64 {
     let input: HashSet<u64> = file_contents
         .lines()
         .map(|s| s.trim())
@@ -33,14 +17,14 @@ fn solve_part_one(file_contents: &str) -> Result<Option<u64>, Box<dyn Error>> {
     for i in input.iter() {
         let j = 2020 - i;
         if input.contains(&j) {
-            return Ok(Some(i * j));
+            return i * j;
         }
     }
 
-    Ok(None)
+    unreachable!();
 }
 
-fn solve_part_two(file_contents: &str) -> Result<Option<u64>, Box<dyn Error>> {
+fn solve_part_two(file_contents: &str) -> u64 {
     let input_set: HashSet<u64> = file_contents
         .lines()
         .map(|s| s.trim())
@@ -56,12 +40,12 @@ fn solve_part_two(file_contents: &str) -> Result<Option<u64>, Box<dyn Error>> {
 
             let k = 2020 - input_vec[i] - input_vec[j];
             if input_set.contains(&k) {
-                return Ok(Some(input_vec[i] * input_vec[j] * k));
+                return input_vec[i] * input_vec[j] * k;
             }
         }
     }
 
-    Ok(None)
+    unreachable!();
 }
 
 #[cfg(test)]
@@ -73,13 +57,13 @@ mod tests {
 
     #[test]
     fn part_one() {
-        let result = solve_part_one(TEST_INPUT_FILE).unwrap().unwrap();
+        let result = solve_part_one(TEST_INPUT_FILE);
         assert_eq!(result, 514579);
     }
 
     #[test]
     fn part_two() {
-        let result = solve_part_two(TEST_INPUT_FILE).unwrap().unwrap();
+        let result = solve_part_two(TEST_INPUT_FILE);
         assert_eq!(result, 241861950);
     }
 }

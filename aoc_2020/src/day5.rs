@@ -1,25 +1,8 @@
-use std::error::Error;
-
 const INPUT_FILE: &str = include_str!(concat!(env!("CARGO_MANIFEST_DIR"), "/input/day5.txt"));
 
-pub fn solve() -> Result<(), Box<dyn Error>> {
-    println!(
-        "Day 05.1: {}",
-        match solve_part_one(INPUT_FILE)? {
-            Some(v) => v.to_string(),
-            None => "no solution".to_string(),
-        }
-    );
-
-    println!(
-        "Day 05.2: {}",
-        match solve_part_two(INPUT_FILE)? {
-            Some(v) => v.to_string(),
-            None => "no solution".to_string(),
-        }
-    );
-
-    Ok(())
+pub fn solve() {
+    println!("Day 05.1: {}", solve_part_one(INPUT_FILE));
+    println!("Day 05.2: {}", solve_part_two(INPUT_FILE));
 }
 
 fn find_position(s: &str, lower_bound: u64, upper_bound: u64) -> u64 {
@@ -43,16 +26,17 @@ fn find_position(s: &str, lower_bound: u64, upper_bound: u64) -> u64 {
     }
 }
 
-fn solve_part_one(file_contents: &str) -> Result<Option<u64>, Box<dyn Error>> {
+fn solve_part_one(file_contents: &str) -> u64 {
     let input: Vec<String> = file_contents.lines().map(|s| s.to_string()).collect();
 
-    Ok(input
+    input
         .iter()
         .map(|s| find_position(&s[..7], 0, 127) * 8 + find_position(&s[7..], 0, 7))
-        .reduce(|a, b| a.max(b)))
+        .reduce(|a, b| a.max(b))
+        .unwrap()
 }
 
-fn solve_part_two(file_contents: &str) -> Result<Option<u64>, Box<dyn Error>> {
+fn solve_part_two(file_contents: &str) -> u64 {
     let input: Vec<String> = file_contents.lines().map(|s| s.to_string()).collect();
 
     let ids = input
@@ -61,11 +45,11 @@ fn solve_part_two(file_contents: &str) -> Result<Option<u64>, Box<dyn Error>> {
         .collect::<Vec<u64>>();
     for i in *ids.iter().min().unwrap()..*ids.iter().max().unwrap() {
         if !ids.contains(&i) && ids.contains(&(i - 1)) && ids.contains(&(i + 1)) {
-            return Ok(Some(i));
+            return i;
         }
     }
 
-    Ok(None)
+    unreachable!();
 }
 
 #[cfg(test)]
@@ -77,14 +61,7 @@ mod tests {
 
     #[test]
     fn part_one() {
-        let result = solve_part_one(TEST_INPUT_FILE).unwrap().unwrap();
+        let result = solve_part_one(TEST_INPUT_FILE);
         assert_eq!(result, 820);
-    }
-
-    #[test]
-    fn part_two() {
-        // NOTE: There is no given input to test a solution which returns an ID
-        let result = solve_part_two(TEST_INPUT_FILE).unwrap();
-        assert!(result.is_none());
     }
 }

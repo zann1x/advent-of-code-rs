@@ -1,5 +1,3 @@
-use std::error::Error;
-
 use regex::Regex;
 
 const INPUT_FILE: &str = include_str!(concat!(env!("CARGO_MANIFEST_DIR"), "/input/day2.txt"));
@@ -11,27 +9,12 @@ struct InputLine {
     password: String,
 }
 
-pub fn solve() -> Result<(), Box<dyn Error>> {
-    println!(
-        "Day 02.1: {}",
-        match solve_part_one(INPUT_FILE)? {
-            Some(v) => v.to_string(),
-            None => "no solution".to_string(),
-        }
-    );
-
-    println!(
-        "Day 02.2: {}",
-        match solve_part_two(INPUT_FILE)? {
-            Some(v) => v.to_string(),
-            None => "no solution".to_string(),
-        }
-    );
-
-    Ok(())
+pub fn solve() {
+    println!("Day 02.1: {}", solve_part_one(INPUT_FILE));
+    println!("Day 02.2: {}", solve_part_two(INPUT_FILE));
 }
 
-fn solve_part_one(file_contents: &str) -> Result<Option<u64>, Box<dyn Error>> {
+fn solve_part_one(file_contents: &str) -> u64 {
     let input: Vec<String> = file_contents.lines().map(|s| s.to_string()).collect();
 
     let mut parsed_input = Vec::<InputLine>::new();
@@ -44,10 +27,10 @@ fn solve_part_one(file_contents: &str) -> Result<Option<u64>, Box<dyn Error>> {
         let m = m.unwrap();
 
         parsed_input.push(InputLine {
-            lower_bound: m[1].parse()?,
-            upper_bound: m[2].parse()?,
-            character: m[3].parse()?,
-            password: m[4].parse()?,
+            lower_bound: m[1].parse().unwrap(),
+            upper_bound: m[2].parse().unwrap(),
+            character: m[3].parse().unwrap(),
+            password: m[4].parse().unwrap(),
         });
     }
 
@@ -59,10 +42,10 @@ fn solve_part_one(file_contents: &str) -> Result<Option<u64>, Box<dyn Error>> {
         })
         .count();
 
-    Ok(Some(valid_password_count as u64))
+    valid_password_count as u64
 }
 
-fn solve_part_two(file_contents: &str) -> Result<Option<u64>, Box<dyn Error>> {
+fn solve_part_two(file_contents: &str) -> u64 {
     let input: Vec<String> = file_contents.lines().map(|s| s.to_string()).collect();
 
     let mut parsed_input = Vec::<InputLine>::new();
@@ -75,10 +58,10 @@ fn solve_part_two(file_contents: &str) -> Result<Option<u64>, Box<dyn Error>> {
         let m = m.unwrap();
 
         parsed_input.push(InputLine {
-            lower_bound: m[1].parse()?,
-            upper_bound: m[2].parse()?,
-            character: m[3].parse()?,
-            password: m[4].parse()?,
+            lower_bound: m[1].parse().unwrap(),
+            upper_bound: m[2].parse().unwrap(),
+            character: m[3].parse().unwrap(),
+            password: m[4].parse().unwrap(),
         });
     }
 
@@ -93,7 +76,7 @@ fn solve_part_two(file_contents: &str) -> Result<Option<u64>, Box<dyn Error>> {
         })
         .count();
 
-    Ok(Some(valid_password_count as u64))
+    valid_password_count as u64
 }
 
 #[cfg(test)]
@@ -105,13 +88,13 @@ mod tests {
 
     #[test]
     fn part_one() {
-        let result = solve_part_one(TEST_INPUT_FILE).unwrap().unwrap();
+        let result = solve_part_one(TEST_INPUT_FILE);
         assert_eq!(result, 2);
     }
 
     #[test]
     fn part_two() {
-        let result = solve_part_two(TEST_INPUT_FILE).unwrap().unwrap();
+        let result = solve_part_two(TEST_INPUT_FILE);
         assert_eq!(result, 1);
     }
 }

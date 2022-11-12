@@ -1,31 +1,13 @@
-use std::{
-    collections::{HashMap, HashSet},
-    error::Error,
-};
+use std::collections::{HashMap, HashSet};
 
 const INPUT_FILE: &str = include_str!(concat!(env!("CARGO_MANIFEST_DIR"), "/input/day6.txt"));
 
-pub fn solve() -> Result<(), Box<dyn Error>> {
-    println!(
-        "Day 06.1: {}",
-        match solve_part_one(INPUT_FILE)? {
-            Some(v) => v.to_string(),
-            None => "no solution".to_string(),
-        }
-    );
-
-    println!(
-        "Day 06.2: {}",
-        match solve_part_two(INPUT_FILE)? {
-            Some(v) => v.to_string(),
-            None => "no solution".to_string(),
-        }
-    );
-
-    Ok(())
+pub fn solve() {
+    println!("Day 06.1: {}", solve_part_one(INPUT_FILE));
+    println!("Day 06.2: {}", solve_part_two(INPUT_FILE));
 }
 
-fn solve_part_one(file_contents: &str) -> Result<Option<u64>, Box<dyn Error>> {
+fn solve_part_one(file_contents: &str) -> u64 {
     let input: Vec<String> = file_contents.lines().map(|s| s.to_string()).collect();
 
     let mut sum = 0;
@@ -43,10 +25,10 @@ fn solve_part_one(file_contents: &str) -> Result<Option<u64>, Box<dyn Error>> {
     sum += group_answers.len() as u64;
     group_answers.clear();
 
-    Ok(Some(sum))
+    sum
 }
 
-fn solve_part_two(file_contents: &str) -> Result<Option<u64>, Box<dyn Error>> {
+fn solve_part_two(file_contents: &str) -> u64 {
     let input: Vec<String> = file_contents.lines().map(|s| s.to_string()).collect();
 
     let mut sum: u64 = 0;
@@ -75,7 +57,7 @@ fn solve_part_two(file_contents: &str) -> Result<Option<u64>, Box<dyn Error>> {
         .count() as u64;
     group_answers.clear();
 
-    Ok(Some(sum))
+    sum
 }
 
 #[cfg(test)]
@@ -87,13 +69,13 @@ mod tests {
 
     #[test]
     fn part_one() {
-        let result = solve_part_one(TEST_INPUT_FILE).unwrap().unwrap();
+        let result = solve_part_one(TEST_INPUT_FILE);
         assert_eq!(result, 11);
     }
 
     #[test]
     fn part_two() {
-        let result = solve_part_two(TEST_INPUT_FILE).unwrap().unwrap();
+        let result = solve_part_two(TEST_INPUT_FILE);
         assert_eq!(result, 6);
     }
 }
