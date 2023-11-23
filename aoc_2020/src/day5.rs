@@ -27,17 +27,17 @@ fn find_position(s: &str, lower_bound: u64, upper_bound: u64) -> u64 {
 }
 
 fn solve_part_one(file_contents: &str) -> u64 {
-    let input: Vec<String> = file_contents.lines().map(|s| s.to_string()).collect();
+    let input: Vec<String> = file_contents.lines().map(ToString::to_string).collect();
 
     input
         .iter()
         .map(|s| find_position(&s[..7], 0, 127) * 8 + find_position(&s[7..], 0, 7))
-        .reduce(|a, b| a.max(b))
+        .reduce(Ord::max)
         .unwrap()
 }
 
 fn solve_part_two(file_contents: &str) -> u64 {
-    let input: Vec<String> = file_contents.lines().map(|s| s.to_string()).collect();
+    let input: Vec<String> = file_contents.lines().map(ToString::to_string).collect();
 
     let ids = input
         .iter()

@@ -13,7 +13,7 @@ struct BagInfo {
 }
 
 fn solve_part_one(file_contents: &str) -> u64 {
-    let input: Vec<String> = file_contents.lines().map(|s| s.to_string()).collect();
+    let input: Vec<String> = file_contents.lines().map(ToString::to_string).collect();
 
     let regexp_bag = Regex::new(r"^([a-z ]+) bags contain (.+)$").unwrap();
     let regexp_contained_bags = Regex::new(r"(\d) ([a-z ]+) bags?").unwrap();
@@ -71,7 +71,7 @@ fn count_bags(bag_infos: &Vec<BagInfo>, name: &str) -> u64 {
 }
 
 fn solve_part_two(file_contents: &str) -> u64 {
-    let input: Vec<String> = file_contents.lines().map(|s| s.to_string()).collect();
+    let input: Vec<String> = file_contents.lines().map(ToString::to_string).collect();
 
     let regexp_bag = Regex::new(r"^([a-z ]+) bags contain (.+)$").unwrap();
     let regexp_contained_bags = Regex::new(r"(\d) ([a-z ]+) bags?").unwrap();

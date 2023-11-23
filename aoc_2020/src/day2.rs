@@ -15,11 +15,11 @@ pub fn solve() {
 }
 
 fn solve_part_one(file_contents: &str) -> u64 {
-    let input: Vec<String> = file_contents.lines().map(|s| s.to_string()).collect();
+    let input: Vec<String> = file_contents.lines().map(ToString::to_string).collect();
 
     let mut parsed_input = Vec::<InputLine>::new();
     let regexp = Regex::new(r"^(\d+)-(\d+) ([a-zA-Z]): ([a-zA-Z]+)$").unwrap();
-    for line in input.iter() {
+    for line in &input {
         let m = regexp.captures(line);
         if m.is_none() {
             continue;
@@ -37,8 +37,9 @@ fn solve_part_one(file_contents: &str) -> u64 {
     let valid_password_count = parsed_input
         .iter()
         .filter(|v| {
-            (v.lower_bound..=v.upper_bound)
-                .contains(&(v.password.chars().filter(|c| c == &v.character).count() as u32))
+            (v.lower_bound..=v.upper_bound).contains(
+                &u32::try_from(v.password.chars().filter(|c| c == &v.character).count()).unwrap(),
+            )
         })
         .count();
 
@@ -46,11 +47,11 @@ fn solve_part_one(file_contents: &str) -> u64 {
 }
 
 fn solve_part_two(file_contents: &str) -> u64 {
-    let input: Vec<String> = file_contents.lines().map(|s| s.to_string()).collect();
+    let input: Vec<String> = file_contents.lines().map(ToString::to_string).collect();
 
     let mut parsed_input = Vec::<InputLine>::new();
     let regexp = Regex::new(r"^(\d+)-(\d+) ([a-zA-Z]): ([a-zA-Z]+)$").unwrap();
-    for line in input.iter() {
+    for line in &input {
         let m = regexp.captures(line);
         if m.is_none() {
             continue;

@@ -8,11 +8,11 @@ pub fn solve() {
 }
 
 fn solve_part_one(file_contents: &str) -> u64 {
-    let input: Vec<String> = file_contents.lines().map(|s| s.to_string()).collect();
+    let input: Vec<String> = file_contents.lines().map(ToString::to_string).collect();
 
     let mut sum = 0;
     let mut group_answers = HashSet::new();
-    for line in input.iter() {
+    for line in &input {
         if line.is_empty() {
             sum += group_answers.len() as u64;
             group_answers.clear();
@@ -29,12 +29,12 @@ fn solve_part_one(file_contents: &str) -> u64 {
 }
 
 fn solve_part_two(file_contents: &str) -> u64 {
-    let input: Vec<String> = file_contents.lines().map(|s| s.to_string()).collect();
+    let input: Vec<String> = file_contents.lines().map(ToString::to_string).collect();
 
     let mut sum: u64 = 0;
     let mut group_members = 0;
     let mut group_answers: HashMap<char, u64> = HashMap::new();
-    for line in input.iter() {
+    for line in &input {
         if line.is_empty() {
             sum += group_answers
                 .iter()

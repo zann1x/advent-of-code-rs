@@ -10,11 +10,11 @@ pub fn solve() {
 fn solve_part_one(file_contents: &str) -> u64 {
     let input: HashSet<u64> = file_contents
         .lines()
-        .map(|s| s.trim())
+        .map(str::trim)
         .map(|s| s.parse().unwrap())
         .collect();
 
-    for i in input.iter() {
+    for i in &input {
         let j = 2020 - i;
         if input.contains(&j) {
             return i * j;
@@ -27,7 +27,7 @@ fn solve_part_one(file_contents: &str) -> u64 {
 fn solve_part_two(file_contents: &str) -> u64 {
     let input_set: HashSet<u64> = file_contents
         .lines()
-        .map(|s| s.trim())
+        .map(str::trim)
         .map(|s| s.parse().unwrap())
         .collect();
     let input_vec: Vec<&u64> = input_set.iter().collect();

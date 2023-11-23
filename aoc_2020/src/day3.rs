@@ -11,7 +11,7 @@ pub fn solve() {
 }
 
 fn solve_part_one(file_contents: &str) -> u64 {
-    let input: Vec<String> = file_contents.lines().map(|s| s.to_string()).collect();
+    let input: Vec<String> = file_contents.lines().map(ToString::to_string).collect();
 
     let map_width = input[0].len();
     let traversion = Traversion { right: 3, down: 1 };
@@ -32,7 +32,7 @@ fn solve_part_one(file_contents: &str) -> u64 {
 }
 
 fn solve_part_two(file_contents: &str) -> u64 {
-    let input: Vec<String> = file_contents.lines().map(|s| s.to_string()).collect();
+    let input: Vec<String> = file_contents.lines().map(ToString::to_string).collect();
 
     let map_width = input[0].len();
     let traversions = vec![
@@ -45,7 +45,7 @@ fn solve_part_two(file_contents: &str) -> u64 {
 
     let mut tree_hit_counts = Vec::<u64>::new();
 
-    for traversion in traversions.iter() {
+    for traversion in &traversions {
         let mut tree_hit_count = 0;
 
         let mut x = 0;

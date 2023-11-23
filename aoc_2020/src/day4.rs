@@ -17,7 +17,7 @@ pub fn solve() {
 }
 
 fn solve_part_one(file_contents: &str) -> u64 {
-    let input: Vec<String> = file_contents.lines().map(|s| s.to_string()).collect();
+    let input: Vec<String> = file_contents.lines().map(ToString::to_string).collect();
 
     let mut passport_data_strings = Vec::new();
     let mut passport_data_string = String::new();
@@ -51,7 +51,7 @@ fn solve_part_one(file_contents: &str) -> u64 {
 
             for part in split {
                 let p = part.split(':').collect::<Vec<_>>();
-                match p[0] {
+                match *p.first().unwrap() {
                     "byr" => entry.byr = Some(p[1].to_string()),
                     "iyr" => entry.iyr = Some(p[1].to_string()),
                     "eyr" => entry.eyr = Some(p[1].to_string()),
@@ -83,7 +83,7 @@ fn solve_part_one(file_contents: &str) -> u64 {
 }
 
 fn solve_part_two(file_contents: &str) -> u64 {
-    let input: Vec<String> = file_contents.lines().map(|s| s.to_string()).collect();
+    let input: Vec<String> = file_contents.lines().map(ToString::to_string).collect();
 
     let mut passport_data_strings = Vec::new();
     let mut passport_data_string = String::new();
@@ -117,7 +117,7 @@ fn solve_part_two(file_contents: &str) -> u64 {
 
             for part in split {
                 let p = part.split(':').collect::<Vec<_>>();
-                match p[0] {
+                match *p.first().unwrap() {
                     "byr" => entry.byr = Some(p[1].to_string()),
                     "iyr" => entry.iyr = Some(p[1].to_string()),
                     "eyr" => entry.eyr = Some(p[1].to_string()),
@@ -165,7 +165,7 @@ fn solve_part_two(file_contents: &str) -> u64 {
                 && hcl.len() == 7
                 && hcl.as_bytes()[1..]
                     .iter()
-                    .all(|c| (b'0'..=b'9').contains(c) || (b'a'..=b'f').contains(c))
+                    .all(|c| c.is_ascii_digit() || (b'a'..=b'f').contains(c))
         })
         .filter(|p| {
             ["amb", "blu", "brn", "gry", "grn", "hzl", "oth"]
@@ -174,7 +174,7 @@ fn solve_part_two(file_contents: &str) -> u64 {
         .filter(|p| {
             let pid = p.pid.as_ref().unwrap();
 
-            pid.len() == 9 && pid.chars().all(|c| c.is_numeric())
+            pid.len() == 9 && pid.chars().all(char::is_numeric)
         })
         .count() as u64
 }

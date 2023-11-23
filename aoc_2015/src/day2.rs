@@ -25,7 +25,7 @@ impl RectangularCuboid {
         let b = self.w * self.h;
         let c = self.h * self.l;
 
-        *vec![a, b, c].iter().min().unwrap()
+        [a, b, c].into_iter().min().unwrap()
     }
 
     fn calculate_smallest_surface_area(&self) -> u64 {
@@ -33,7 +33,7 @@ impl RectangularCuboid {
         let b = 2 * self.l + 2 * self.h;
         let c = 2 * self.w + 2 * self.h;
 
-        *vec![a, b, c].iter().min().unwrap()
+        [a, b, c].into_iter().min().unwrap()
     }
 
     fn calculate_volume(&self) -> u64 {

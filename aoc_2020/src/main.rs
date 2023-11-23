@@ -1,4 +1,4 @@
-use aoc_2020::*;
+use aoc_2020::{day1, day2, day3, day4, day5, day6, day7};
 
 fn main() {
     day1::solve();
