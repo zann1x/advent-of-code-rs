@@ -1,5 +1,5 @@
 use anyhow::{bail, Result};
-use aoc_2023::{day1, day2, day3, day4, day5, day6, day7, Solve};
+use aoc_2023::{day1, day2, day3, day4, day5, day6, day7, day8, Solve};
 use clap::{value_parser, Parser};
 
 #[derive(Parser)]
@@ -20,7 +20,8 @@ fn main() -> Result<()> {
         5 => day5::Solver.solve(),
         6 => day6::Solver.solve(),
         7 => day7::Solver.solve(),
-        day @ 8..=25 => bail!("day {day} is not implemented yet"),
+        8 => day8::Solver.solve(),
+        day @ 9..=25 => bail!("day {day} is not implemented yet"),
         day => bail!("invalid day {day}, valid values are 1..=25"),
     };
 
